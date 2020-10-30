@@ -1,0 +1,30 @@
+{
+  "name": "expressjs-first-app",
+  "version": "1.0.0",
+  "description": "Project made for learning express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishrahul98/NodeJs-learning-projects.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs"
+  ],
+  "author": "Rahul Krishna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krishrahul98/NodeJs-learning-projects/issues"
+  },
+  "homepage": "https://github.com/krishrahul98/NodeJs-learning-projects#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
