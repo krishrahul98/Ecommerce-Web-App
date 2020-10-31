@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 //Read Environment Variables
 require("dotenv").config();
 
+const sequelize = require("./util/database");
+
 const errorController = require("./controllers/error");
 
 const adminRoutes = require("./routes/admin");
@@ -11,7 +13,7 @@ const shopRoutes = require("./routes/shop");
 
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -24,4 +26,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
