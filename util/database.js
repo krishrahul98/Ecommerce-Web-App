@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 const databaseName = process.env.MYSQL_DATABASE;
 const username = process.env.MYSQL_USER;
