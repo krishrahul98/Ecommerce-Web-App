@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-web-app",
   "version": "1.0.0",
-  "description": "Project made for learning NodeJs backend",
+  "description": "A nodeJs app made using ExpressJs, MongoDb and EJS",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -12,7 +12,8 @@
   "keywords": [
     "nodejs",
     "expressjs",
-    "ecommerce"
+    "ecommerce",
+    "mongodb"
   ],
   "author": "Rahul Krishna",
   "license": "MIT",
@@ -23,16 +24,9 @@
   "devDependencies": {
     "nodemon": "^2.0.6"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "data/*.json"
-    ]
-  },
   "dependencies": {
-    "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
+    "mongodb": "^3.6.2"
   }
 }

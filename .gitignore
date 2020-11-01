@@ -99,6 +99,9 @@ dist
 # FuseBox cache
 .fusebox/
 
+#Nodemon Configuration
+nodemon.json
+
 # DynamoDB Local files
 .dynamodb/
 

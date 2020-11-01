@@ -1,13 +1,25 @@
-const { Sequelize } = require("sequelize");
+const MongoClient = require("mongodb").MongoClient;
 
-const databaseName = process.env.MYSQL_DATABASE;
-const username = process.env.MYSQL_USER;
-const password = process.env.MYSQL_USER_PASSWORD;
-const hostName = process.env.MYSQL_HOST;
+let _db;
 
-const sequelize = new Sequelize(databaseName, username, password, {
-  dialect: "mysql",
-  host: hostName,
-});
+const mongoConnect = (callback) => {
+  MongoClient.connect(process.env.MONGODB_URI, { useUnifiedTopology: true })
+    .then((client) => {
+      console.log("Database Connected");
+      _db = client.db("shop");
+      callback();
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
 
-module.exports = sequelize;
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  throw "No Database Found!";
+};
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
