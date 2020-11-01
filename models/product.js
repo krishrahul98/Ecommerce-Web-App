@@ -12,22 +12,14 @@ class Product {
   }
   save() {
     const db = getDb();
-    let dbOp;
     if (this._id) {
       //Update the product
-      dbOp = db
+      return db
         .collection("products")
         .updateOne({ _id: this._id }, { $set: this });
     } else {
-      dbOp = db.collection("products").insertOne(this);
+      return db.collection("products").insertOne(this);
     }
-    return dbOp
-      .then((result) => {
-        //console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   static fetchAll() {

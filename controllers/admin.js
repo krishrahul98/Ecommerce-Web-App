@@ -1,6 +1,6 @@
 const Product = require("../models/product");
 
-exports.getAddProduct = (req, res, next) => {
+exports.getAddProduct = (req, res) => {
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
@@ -8,7 +8,7 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = (req, res) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
@@ -23,8 +23,7 @@ exports.postAddProduct = (req, res, next) => {
   );
   product
     .save()
-    .then((result) => {
-      //console.log(result);
+    .then(() => {
       console.log("Product Created");
       res.redirect("/admin/products");
     })
@@ -33,7 +32,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect("/");
@@ -56,7 +55,7 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
-exports.postEditProduct = (req, res, next) => {
+exports.postEditProduct = (req, res) => {
   const productId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedImageUrl = req.body.imageUrl;
@@ -72,7 +71,7 @@ exports.postEditProduct = (req, res, next) => {
   );
   product
     .save()
-    .then((result) => {
+    .then(() => {
       console.log("Product Updated");
       res.redirect("/admin/products");
     })
@@ -81,7 +80,7 @@ exports.postEditProduct = (req, res, next) => {
     });
 };
 
-exports.getProducts = (req, res, next) => {
+exports.getProducts = (req, res) => {
   Product.fetchAll()
     .then((products) => {
       res.render("admin/products", {
@@ -95,7 +94,7 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.postDeleteProduct = (req, res, next) => {
+exports.postDeleteProduct = (req, res) => {
   const productId = req.body.productId;
   Product.deleteById(productId)
     .then(() => {
