@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const errorController = require("./controllers/error");
-const mongoConnect = require("./util/database").mongoConnect;
 const User = require("./models/user");
 
 const adminRoutes = require("./routes/admin");
@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.use((req, res, next) => {
   User.findById(process.env.USERID_TEST)
     .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
+      req.user = user;
       next();
     })
     .catch((err) => {
@@ -35,7 +35,25 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(PORT, () => console.log(`Server started at PORT ${PORT}`));
-});
-//app.listen(PORT);
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: "shop",
+  })
+  .then(() => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Rahul",
+          email: "admin@krishrahul98.me",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
+    app.listen(PORT, () => console.log(`Server started at PORT ${PORT}`));
+  })
+  .catch((err) => console.log(err));
