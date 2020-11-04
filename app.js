@@ -59,18 +59,6 @@ mongoose
     dbName: "shop",
   })
   .then(() => {
-    User.findOne().then((user) => {
-      if (!user) {
-        const user = new User({
-          name: "Rahul",
-          email: "admin@krishrahul98.me",
-          cart: {
-            items: [],
-          },
-        });
-        user.save();
-      }
-    });
     app.listen(PORT, () => console.log(`Server started at PORT ${PORT}`));
   })
   .catch((err) => console.log(err));
