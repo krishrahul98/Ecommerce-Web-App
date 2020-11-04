@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
@@ -10,6 +12,11 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
 const app = express();
+const store = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: "sessions",
+  databaseName: "shop",
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,17 +25,25 @@ app.set("views", "views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
+app.use(
+  session({
+    secret: "YU!kJzJLoO6g3USvkDagakLw$Hyvc9avdk$eBT#paX6Sp0tg*q",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 
-// Temporary Database User
 app.use((req, res, next) => {
-  User.findById(process.env.USERID_TEST)
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
     .then((user) => {
       req.user = user;
       next();
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 });
 
 app.use("/admin", adminRoutes);
