@@ -104,10 +104,10 @@ exports.postSignup = (req, res, next) => {
           res.redirect("/login");
           return transporter.sendMail({
             to: email,
-            from: "admin@krishrahul98.me",
+            from: "Rahul Krishna <admin@krishrahul98.me>",
             subject: "Signup Successful - Ecommerce-Rahul",
             html:
-              "<h1>You successfully signed up!</h1><br><p>Rahul Krishna</p><br><a href='https://ecommerce-rahul-nodejs.herokuapp.com/'>Ecommerce-Rahul</a>",
+              "<h1>You successfully signed up!</h1><br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>",
           });
         });
     })

@@ -5,6 +5,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const helmet = require("helmet");
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
@@ -14,6 +15,7 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
 const app = express();
+app.use(helmet({ contentSecurityPolicy: false }));
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URI,
   collection: "sessions",
@@ -29,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(
   session({
-    secret: "YU!kJzJLoO6g3USvkDagakLw$Hyvc9avdk$eBT#paX6Sp0tg*q",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
