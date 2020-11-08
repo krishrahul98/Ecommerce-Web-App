@@ -13,7 +13,7 @@
         <% if(successMessage){ %>
             <div class="user-message"><%= successMessage %></div>
         <% } %>
-        <form class="login-form" action="/login" method="POST">
+        <form class="login-form" action="/login" method="POST" novalidate>
             <div class="form-control">
                 <label for="email">E-mail</label>
                 <input type="text" name="email" id="email">
