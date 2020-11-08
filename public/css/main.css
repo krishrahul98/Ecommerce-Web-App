@@ -251,6 +251,9 @@ form {
   #side-menu-toggle {
     display: none;
   }
+  .mobile-nav {
+    display: none;
+  }
 
   .user-message {
     width: 30rem;
