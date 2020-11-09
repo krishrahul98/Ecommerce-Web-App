@@ -130,15 +130,19 @@ exports.postSignup = (req, res, next) => {
     .then(() => {
       console.log("Signup Successful");
       res.redirect("/login");
-      // return transporter.sendMail({
-      //   to: email,
-      //   from: "Rahul Krishna <admin@krishrahul98.me>",
-      //   subject: "Signup Successful - Ecommerce-Rahul",
-      //   html:
-      //     "<h1>You successfully signed up!</h1><br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>",
-      // });
+      return transporter.sendMail({
+        to: email,
+        from: "Rahul Krishna <admin@krishrahul98.me>",
+        subject: "Signup Successful - Ecommerce-Rahul",
+        html:
+          "<h1>You successfully signed up!</h1><br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>",
+      });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getReset = (req, res, next) => {
@@ -183,10 +187,18 @@ exports.postReset = (req, res, next) => {
                 <br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>`,
                 });
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+              });
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          const error = new Error(err);
+          error.httpStatusCode = 500;
+          return next(error);
+        });
     }
   });
 };
@@ -212,7 +224,11 @@ exports.getNewPassword = (req, res, next) => {
         res.redirect("/login");
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postNewPassword = (req, res, next) => {
@@ -239,5 +255,9 @@ exports.postNewPassword = (req, res, next) => {
       req.flash("success", "Password Updated successfully.");
       res.redirect("/login");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
