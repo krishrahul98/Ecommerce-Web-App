@@ -35,7 +35,7 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
     "helmet": "^4.2.0",
-    "mongoose": "^5.10.11",
+    "mongoose": "^5.11.19",
     "nodemailer": "^6.4.14",
     "nodemailer-sendgrid-transport": "^0.2.0"
   }
