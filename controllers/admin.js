@@ -1,6 +1,5 @@
 const { validationResult } = require("express-validator");
 
-const product = require("../models/product");
 const Product = require("../models/product");
 
 exports.getProducts = (req, res) => {

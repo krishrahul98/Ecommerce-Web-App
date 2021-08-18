@@ -24,7 +24,7 @@ router.post(
   [
     body("email", "Invalid email")
       .isEmail()
-      .custom((value, { req }) => {
+      .custom((value, {}) => {
         return User.findOne({ email: value }).then((userDoc) => {
           if (userDoc) {
             return Promise.reject("Email already exist");

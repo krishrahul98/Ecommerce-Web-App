@@ -72,7 +72,7 @@ app.use(authRoutes);
 app.use("/500", errorController.get500);
 app.use(errorController.get404);
 
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
   res.status(404).render("500", {
     pageTitle: "Error Occured!",
     path: "/500",
@@ -92,5 +92,5 @@ mongoose
   .catch((err) => {
     const error = new Error(err);
     error.httpStatusCode = 500;
-    return next(error);
+    throw next(error);
   });

@@ -6,7 +6,6 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const { validationResult } = require("express-validator");
 
 const User = require("../models/user");
-const user = require("../models/user");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -16,7 +15,7 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-exports.getLogin = (req, res, next) => {
+exports.getLogin = (req, res) => {
   let errorMessage = req.flash("error");
   if (!errorMessage.length) {
     errorMessage = null;
@@ -33,7 +32,7 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const errors = validationResult(req);
@@ -76,7 +75,7 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postLogout = (req, res, next) => {
+exports.postLogout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.log(err);
@@ -85,7 +84,7 @@ exports.postLogout = (req, res, next) => {
   });
 };
 
-exports.getSignup = (req, res, next) => {
+exports.getSignup = (req, res) => {
   let message = req.flash("error");
   if (!message.length) {
     message = null;
@@ -134,8 +133,7 @@ exports.postSignup = (req, res, next) => {
         to: email,
         from: "Rahul Krishna <admin@krishrahul98.me>",
         subject: "Signup Successful - Ecommerce-Rahul",
-        html:
-          "<h1>You successfully signed up!</h1><br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>",
+        html: "<h1>You successfully signed up!</h1><br><br><hr><p>Rahul Krishna</p><br><a href='https://ecommerce.rahul.cf/'>Ecommerce-Rahul</a>",
       });
     })
     .catch((err) => {
@@ -145,7 +143,7 @@ exports.postSignup = (req, res, next) => {
     });
 };
 
-exports.getReset = (req, res, next) => {
+exports.getReset = (req, res) => {
   let message = req.flash("error");
   if (!message.length) {
     message = null;
@@ -174,7 +172,7 @@ exports.postReset = (req, res, next) => {
             user.resetTokenExpiration = Date.now() + 3600000;
             user
               .save()
-              .then((result) => {
+              .then(() => {
                 req.flash("success", "Check your email for password reset");
                 res.redirect("/login");
                 transporter.sendMail({
