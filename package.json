@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/krishrahul98/Ecommerce-Web-App",
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.15"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
